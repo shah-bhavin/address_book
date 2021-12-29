@@ -13,7 +13,7 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('public/css/app.css') }}">
 
-        @livewireStyles
+        {{--@livewireStyles--}}
 
         <!-- Scripts -->
         <script src="{{ asset('public/js/app.js') }}" defer></script>
