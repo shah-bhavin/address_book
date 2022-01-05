@@ -1,6 +1,15 @@
 body{
   font-family: 'Noto Sans', sans-serif;
 }
+.content{
+  min-height: 500px !important;
+}
 form label{
   font-weight: bold;
+}
+nav, nav ul.dropdown-menu{
+  background-color:#A020F0 !important;
+}
+nav ul li a{
+  color:#ffffff !important;
 }
