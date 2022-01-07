@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddresseeController;
+use App\Http\Controllers\DiseaseController;
+use App\Http\Controllers\TreatmentController;
+use App\Http\Controllers\DietController;
+use App\Http\Controllers\RxController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +18,9 @@ use App\Http\Controllers\AddresseeController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 
 // Route::get('/', function () {
@@ -24,6 +28,12 @@ use App\Http\Controllers\AddresseeController;
 // });
 
 Route::resource('addressees', AddresseeController::class);
+Route::resource('diseases', DiseaseController::class);
+Route::resource('diets', DietsController::class);
+Route::resource('treatments', TreatmentController::class);
+Route::resource('diets', DietController::class);
+Route::resource('rxs', RxController::class);
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
