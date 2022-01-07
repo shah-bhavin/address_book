@@ -41,8 +41,9 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href="diseases">Disease</a></li>
-            <li><a class="dropdown-item" href="diet">Diet</a></li>
+            <li><a class="dropdown-item" href="diets">Diet</a></li>
             <li><a class="dropdown-item" href="treatments">Treatment</a></li>
+            <li><a class="dropdown-item" href="mappings">Mapping</a></li>
           </ul>
         </li>		
         </ul>		  
