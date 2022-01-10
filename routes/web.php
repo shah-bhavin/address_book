@@ -5,7 +5,7 @@ use App\Http\Controllers\AddresseeController;
 use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\TreatmentController;
 use App\Http\Controllers\DietController;
-use App\Http\Controllers\RxController;
+use App\Http\Controllers\MappingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +29,10 @@ Route::get('/', function () {
 
 Route::resource('addressees', AddresseeController::class);
 Route::resource('diseases', DiseaseController::class);
-Route::resource('diets', DietsController::class);
-Route::resource('treatments', TreatmentController::class);
 Route::resource('diets', DietController::class);
-Route::resource('rxs', RxController::class);
+Route::resource('treatments', TreatmentController::class);
+Route::resource('mappings', MappingController::class);
+
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
