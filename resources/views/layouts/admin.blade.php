@@ -8,18 +8,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">    <link rel="stylesheet" href="{{ asset('public/css/style.css') }}">
     <!-- Datatable-->
     <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+
     <script>
-    $(document).ready( function () {
-        $('#sample').DataTable();
-    } );
+    // $(document).ready( function () {
+    //     $('#sample').DataTable();
+    // } );
     </script>
     <!-- Datatable-->
     <!-- Bootstrap Icons-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <!-- Bootstrap Icons-->
+    <meta name="csrf-token" content="{{ csrf_token() }}"> 
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <title>Diseases</title>
   </head>
   <body>
@@ -44,6 +48,7 @@
             <li><a class="dropdown-item" href="diets">Diet</a></li>
             <li><a class="dropdown-item" href="treatments">Treatment</a></li>
             <li><a class="dropdown-item" href="mappings">Mapping</a></li>
+            <li><a class="dropdown-item" href="naturopathy">View</a></li>
           </ul>
         </li>		
         </ul>		  
@@ -102,7 +107,6 @@
     <!-- Copyright -->
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    
+
   </body>
 </html>

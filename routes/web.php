@@ -23,10 +23,8 @@ Route::get('/', function () {
 });
 
 
-// Route::get('/', function () {
-//     return view('addressee.index');
-// });
 
+Route::get('view', [MappingController::class, 'view'])->name('view');
 Route::resource('addressees', AddresseeController::class);
 Route::resource('diseases', DiseaseController::class);
 Route::resource('diets', DietController::class);
@@ -34,6 +32,10 @@ Route::resource('treatments', TreatmentController::class);
 Route::resource('mappings', MappingController::class);
 
 
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/naturopathy', function () {
+    return view('naturopathy');
+})->name('naturopathy');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

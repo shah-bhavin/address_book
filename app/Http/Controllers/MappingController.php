@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mapping;
+use App\Models\Disease;
+use App\Models\Diet;
+use App\Models\Treatment;
+
 use Illuminate\Http\Request;
 
 class MappingController extends Controller
@@ -65,6 +69,24 @@ class MappingController extends Controller
         return view('mappings.show',compact('mapping'));
     }
 
+    public function view(Request $request){
+        //$data['disease'] = Disease::where('disease_name', 'LIKE',"%{$request['id']}%")->get('disease_name');
+        //$data['diet'] = Diet::where('diet_name', 'LIKE',"%{$request['id']}%")->get('diet_name');
+        $result = Treatment::where('treatment_name', 'LIKE',"%{$request['id']}%")->limit(10)->get('treatment_name', 'id');
+        //return response()->json($data);
+
+        $skillData = array(); 
+        if(count($result) > 0){ 
+            foreach($result as $row){ 
+                $data['value'] = $row->treatment_name;
+                $data['id'] = $row->id;
+                array_push($skillData, $data);
+            } 
+        }
+        //echo json_encode($skillData);
+        return $skillData;
+    }
+    
     /**
      * Show the form for editing the specified resource.
      *
