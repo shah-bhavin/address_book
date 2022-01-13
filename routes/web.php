@@ -23,14 +23,15 @@ Route::get('/', function () {
 });
 
 
-
-Route::get('view', [MappingController::class, 'view'])->name('view');
-Route::resource('addressees', AddresseeController::class);
-Route::resource('diseases', DiseaseController::class);
-Route::resource('diets', DietController::class);
-Route::resource('treatments', TreatmentController::class);
-Route::resource('mappings', MappingController::class);
-
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('view', [MappingController::class, 'view'])->name('view');
+    Route::post('showData', [MappingController::class, 'showData'])->name('showData');
+    Route::resource('addressees', AddresseeController::class);
+    Route::resource('diseases', DiseaseController::class);
+    Route::resource('diets', DietController::class);
+    Route::resource('treatments', TreatmentController::class);
+    Route::resource('mappings', MappingController::class);
+});
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/naturopathy', function () {

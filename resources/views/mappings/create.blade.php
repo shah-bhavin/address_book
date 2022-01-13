@@ -5,7 +5,7 @@
     <div class="col-md-12">
         <div class="float-start">
             @if(@$mapping->id)
-                <h2>Edit - {{ @$mapping->mapping_name }}</h2>
+                <h2>Edit - {{ @$mapping->disease_ref }}</h2>
             @else
                 <h2>Add New mapping</h2>
             @endif
@@ -40,52 +40,20 @@
     <div class="row">
         <div class="mb-3">
             <label for="disease_ref" class="form-label">Disease:</label>
-            <!-- <input type="text" name="disease_ref"  value="{{ @$mapping->disease_ref }}" id="disease_ref" class="form-control"> -->
-            <select class="form-control" name="disease_ref" id="disease_ref">
-                <option selected>Please Select Disease</option>
-                @foreach(App\Models\Disease::all() as $disease)
-                <option value="{{ $disease->id }}">{{ $disease->disease_name }}</option>
-                @endforeach
-
-            </select>
+            <input type="text" name="disease_ref"  value="{{ @$mapping->disease_ref }}" id="disease_ref" class="form-control">
         </div>           
 
         <div class="mb-3 col-md-6">
             <label for="short_code" class="form-label">Diet:</label>
-            <select class="form-select" name="diet_ref_from" id="diet_ref_from">
-                <option selected>Please Select Diet</option>
-                @foreach(App\Models\Diet::all() as $diet)
-                <option value="{{ $diet->id }}">{{ $diet->diet_name }}</option>
-                @endforeach
-            </select>
+            <input type="text" name="diet_ref"  value="{{ @$mapping->diet_ref }}" id="diet_ref" class="form-control">
         </div>           
 
         <div class="mb-3 col-md-6">
             <label for="short_code" class="form-label">Treatment:</label>
-            <select class="form-select" name="treatment_ref_from" id="treatment_ref_from">
-                <option selected>Please Select Treatment</option>
-                @foreach(App\Models\Treatment::all() as $treatment)
-                <option value="{{ $treatment->id }}">{{ $treatment->treatment_name }}</option>
-                @endforeach
-            </select>
+            <input type="text" name="treatment_ref"  value="{{ @$mapping->treatment_ref }}" id="treatment_ref" class="form-control">
+
         </div>    
         
-        
-        <div class="mb-3 col-md-6">
-            <label for="short_code" class="form-label">Selected Diet:</label>
-            <select multiple="multiple" class="form-select diet" name="diet_ref[]">
-                
-            </select>
-        </div>           
-
-        <div class="mb-3 col-md-6">
-            <label for="short_code" class="form-label">Selected Treatment:</label>
-            <select multiple="multiple" class="form-select treatment" name="treatment_ref[]">
-                
-            </select>
-        </div>           
-
-
         <div class="text-center">
             <button type="submit" class="btn btn-primary float-end">Submit</button>
         </div>
@@ -93,19 +61,4 @@
    
 </form>
 
-<script>
-    $('#treatment_ref_from').on('change', function() {
-       var treatment_name = $("#treatment_ref_from :selected").text();
-       var treatment_id = $("#treatment_ref_from :selected").val();
-
-       $('.treatment').append('<option value="'+treatment_id+'" selected>'+treatment_name+'</option>');
-    });
-
-    $('#diet_ref_from').on('change', function() {
-       var diet_name = $("#diet_ref_from :selected").text();
-       var diet_id = $("#diet_ref_from :selected").val();
-
-       $('.diet').append('<option value="'+diet_id+'" selected>'+diet_name+'</option>');
-    });
-</script>
 @endsection

@@ -17,13 +17,8 @@ class MappingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        // $mappings = Mapping::join('diseases', 'diseases.id', 'mappings.disease_ref')
-        // ->join('diets', 'diets.id', 'mappings.diet_ref')
-        // ->whereIn('diets.id', 'mappings.diet_ref')
-        // ->get(['mappings.*', 'diseases.disease_name']);
         $mappings = Mapping::all();
-
-         return view('mappings.index', compact('mappings'))
+        return view('mappings.index', compact('mappings'))
              ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -43,11 +38,11 @@ class MappingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        $treatment_ref = implode(',', $request->input('treatment_ref'));
-        $diet_ref = implode(',', $request->input('diet_ref'));
+        // $treatment_ref = implode(',', $request->input('treatment_ref'));
+        // $diet_ref = implode(',', $request->input('diet_ref'));
 
-        $request['diet_ref'] = $diet_ref;
-        $request['treatment_ref'] = $treatment_ref;
+        // $request['diet_ref'] = $diet_ref;
+        // $request['treatment_ref'] = $treatment_ref;
         $request->validate([
             'disease_ref' => 'required',
             'diet_ref' => 'required',
@@ -70,21 +65,79 @@ class MappingController extends Controller
     }
 
     public function view(Request $request){
-        //$data['disease'] = Disease::where('disease_name', 'LIKE',"%{$request['id']}%")->get('disease_name');
-        //$data['diet'] = Diet::where('diet_name', 'LIKE',"%{$request['id']}%")->get('diet_name');
-        $result = Treatment::where('treatment_name', 'LIKE',"%{$request['id']}%")->limit(10)->get('treatment_name', 'id');
-        //return response()->json($data);
-
+        $disease = Mapping::where('disease_ref', 'LIKE',"%{$request['term']}%")->limit(3)->get();
+        $diet = Mapping::where('diet_ref', 'LIKE',"%{$request['term']}%")->limit(3)->get();
+        $treatment = Mapping::where('treatment_ref', 'LIKE',"%{$request['term']}%")->limit(3)->get();
         $skillData = array(); 
-        if(count($result) > 0){ 
-            foreach($result as $row){ 
-                $data['value'] = $row->treatment_name;
-                $data['id'] = $row->id;
+        if(count($disease) > 0){ 
+            foreach(@$disease as $row){ 
+                $data['value'] = $row->disease_ref;
+                $data['id'] = $row->disease_ref.'_dr';
                 array_push($skillData, $data);
             } 
         }
-        //echo json_encode($skillData);
-        return $skillData;
+        if(count($diet) > 0){ 
+            foreach(@$diet as $row){ 
+                $rows = explode(', ', $row->diet_ref);
+                foreach(@$rows as $row){
+                    $data['value'] = $row;
+                    $data['id'] = $row.'_dt';
+                    array_push($skillData, $data);
+                }
+            } 
+        }
+        if(count($treatment) > 0){ 
+            foreach(@$treatment as $row){ 
+                $rows = explode(', ', $row->treatment_ref);
+                foreach(@$rows as $row){
+                    $data['value'] = $row;
+                    $data['id'] = $row.'_tr';
+                    array_push($skillData, $data);
+                }
+            } 
+        }
+
+        return array_map("unserialize", array_unique(array_map("serialize", $skillData)));
+    }
+
+    public function showData(Request $request){
+        $diseases = Mapping::where('disease_ref', 'LIKE',"%{$request['term']}%")->limit(10)->get();
+        $diets = Mapping::where('diet_ref', 'LIKE',"%{$request['term']}%")->limit(5)->get();
+        $treatments = Mapping::where('treatment_ref', 'LIKE',"%{$request['term']}%")->limit(5)->get();
+        
+        $data = '<div class="row">';
+        foreach($diseases as $disease){
+            $data .= '<div class="panel col-md-6">';
+            $data .= '<div class="panel-heading">Rx</div>';
+            $data .= '<div class="panel-body">';
+            $data .= '<div><b>Disease : </b>'.$disease['disease_ref'].'</div>';
+            $data .= '<div><b>Diet : </b>'.$disease['diet_ref'].'</div>';
+            $data .= '<div><b>Treatment : </b>'.$disease['treatment_ref'].'</div>';
+            $data .= '</div>';
+            $data .= '</div>';
+        }
+        foreach($diets as $diet){
+            $data .= '<div class="panel col-md-6">';
+            $data .= '<div class="panel-heading">Rx</div>';
+            $data .= '<div class="panel-body">';
+            $data .= '<div><b>Disease : </b>'.$diet['disease_ref'].'</div>';
+            $data .= '<div><b>Diet : </b>'.$diet['diet_ref'].'</div>';
+            $data .= '<div><b>Treatment : </b>'.$diet['treatment_ref'].'</div>';
+            $data .= '</div>';
+            $data .= '</div>';
+        }
+        foreach($treatments as $treatment){
+            $data .= '<div class="panel col-md-6">';
+            $data .= '<div class="panel-heading">Rx</div>';
+            $data .= '<div class="panel-body">';
+            $data .= '<div><b>Disease : </b>'.$treatment['disease_ref'].'</div>';
+            $data .= '<div><b>Diet : </b>'.$treatment['diet_ref'].'</div>';
+            $data .= '<div><b>Treatment : </b>'.$treatment['treatment_ref'].'</div>';
+            $data .= '</div>';
+            $data .= '</div>';
+        }
+        $data .= '</div>';
+        return $data;
     }
     
     /**
@@ -94,7 +147,6 @@ class MappingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Mapping $mapping){
-        // echo '<pre>';print_r($mapping);echo '</pre>';
         return view('mappings.create', compact('mapping'));
     }
 
@@ -107,8 +159,9 @@ class MappingController extends Controller
      */
     public function update(Request $request, Mapping $mapping){
         $request->validate([
-            'mapping_name' => 'required',
-            'short_code' => 'required',
+            'disease_ref' => 'required',
+            'diet_ref' => 'required',
+            'treatment_ref' => 'required',
         ]);
     
         $mapping->update($request->all());

@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">    <link rel="stylesheet" href="{{ asset('public/css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">    
     <!-- Datatable-->
     <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('public/css/style.css') }}">
 
     <script>
-    // $(document).ready( function () {
-    //     $('#sample').DataTable();
-    // } );
+    $(document).ready( function () {
+        $('#sample').DataTable();
+    } );
     </script>
     <!-- Datatable-->
     <!-- Bootstrap Icons-->
@@ -25,6 +27,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <title>Diseases</title>
+
   </head>
   <body>
     <nav class="navbar navbar-expand-sm navbar-light text-primary">
@@ -44,13 +47,32 @@
             Naturapathy
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="diseases">Disease</a></li>
+            <!-- <li><a class="dropdown-item" href="diseases">Disease</a></li>
             <li><a class="dropdown-item" href="diets">Diet</a></li>
-            <li><a class="dropdown-item" href="treatments">Treatment</a></li>
+            <li><a class="dropdown-item" href="treatments">Treatment</a></li> -->
             <li><a class="dropdown-item" href="mappings">Mapping</a></li>
             <li><a class="dropdown-item" href="naturopathy">View</a></li>
           </ul>
-        </li>		
+        </li>	
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{Auth::user()->name}}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="user/profile">Profile</a></li>
+            <li>
+              <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                  Logout
+              </a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  {{ csrf_field() }}
+              </form>
+            </li>
+          </ul>
+        </li>
+
+        
         </ul>		  
       </div>
       </div>
@@ -58,6 +80,7 @@
 
 
     <div class="container content">
+    
     @yield('content')
     </div> 
     <footer class="bg-dark text-center text-white">
