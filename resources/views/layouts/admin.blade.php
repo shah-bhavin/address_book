@@ -50,7 +50,8 @@
             <!-- <li><a class="dropdown-item" href="diseases">Disease</a></li>
             <li><a class="dropdown-item" href="diets">Diet</a></li>
             <li><a class="dropdown-item" href="treatments">Treatment</a></li> -->
-            <li><a class="dropdown-item" href="mappings">Mapping</a></li>
+            <li><a class="dropdown-item" href="importExportView">Upload Data with Excel</a></li>
+            <li><a class="dropdown-item" href="mappings">Data</a></li>
             <li><a class="dropdown-item" href="naturopathy">View</a></li>
           </ul>
         </li>	

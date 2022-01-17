@@ -31,6 +31,12 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('diets', DietController::class);
     Route::resource('treatments', TreatmentController::class);
     Route::resource('mappings', MappingController::class);
+
+
+    Route::get('export', [MappingController::class, 'export'])->name('export');
+    Route::get('importExportView', [MappingController::class, 'importExportView']);
+    Route::post('import', [MappingController::class, 'import'])->name('import');
+
 });
 
 

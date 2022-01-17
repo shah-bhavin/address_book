@@ -8,6 +8,9 @@ use App\Models\Diet;
 use App\Models\Treatment;
 
 use Illuminate\Http\Request;
+use App\Exports\MapExport;
+use App\Imports\MapImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MappingController extends Controller
 {
@@ -181,5 +184,28 @@ class MappingController extends Controller
     
         return redirect()->route('mappings.index')
                         ->with('success','Mapping deleted successfully');
+    }
+
+    public function importExportView()
+    {
+       return view('mappings/import');
+    }
+   
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function export() 
+    {
+        return Excel::download(new MapExport, 'users.xlsx');
+    }
+   
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function import() 
+    {
+        Excel::import(new MapImport, request()->file('file'));
+
+        return back()->with('message', 'File Uploaded Successfully');;
     }
 }
