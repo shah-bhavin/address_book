@@ -25,6 +25,42 @@ class MappingController extends Controller
              ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
+    public function naturopathy(){
+        $data['diseases'] = Mapping::get();
+        $diet_list = Mapping::select('diet_ref')->get();
+        $diet_list_final = array(); 
+        if(count($diet_list) > 0){
+            foreach(@$diet_list as $row){ 
+                array_push($diet_list_final, $row['diet_ref']);
+            } 
+            $diet_list_final = implode(",",$diet_list_final);
+            $diet_list_final = explode(',', $diet_list_final);
+        }
+
+        $treatment_list = Mapping::select('treatment_ref')->get();
+        $treatment_list_final = array(); 
+        if(count($treatment_list) > 0){
+            foreach(@$treatment_list as $row){ 
+                array_push($treatment_list_final, $row['treatment_ref']);
+            } 
+            $treatment_list_final = implode(",",$treatment_list_final);
+            $treatment_list_final = explode(',', $treatment_list_final);
+        }
+        $data['diet_list_finals'] = array_map("unserialize", array_unique(array_map("serialize", $diet_list_final)));
+        $data['treatment_list_finals'] = array_map("unserialize", array_unique(array_map("serialize", $treatment_list_final)));
+        return view('naturopathy', $data);
+    }
+
+    public function viewDiet($request){
+        $diets = Mapping::where('diet_ref', 'LIKE',"%{$request}%")->get();
+        return $diets;
+    }
+
+    public function viewTreatment($request){
+        $treatments = Mapping::where('treatment_ref', 'LIKE',"%{$request}%")->get();
+        return $treatments;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -41,11 +77,6 @@ class MappingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        // $treatment_ref = implode(',', $request->input('treatment_ref'));
-        // $diet_ref = implode(',', $request->input('diet_ref'));
-
-        // $request['diet_ref'] = $diet_ref;
-        // $request['treatment_ref'] = $treatment_ref;
         $request->validate([
             'disease_ref' => 'required',
             'diet_ref' => 'required',

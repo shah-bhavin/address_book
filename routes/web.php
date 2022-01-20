@@ -37,12 +37,14 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('importExportView', [MappingController::class, 'importExportView']);
     Route::post('import', [MappingController::class, 'import'])->name('import');
 
+    Route::get('naturopathy', [MappingController::class, 'naturopathy'])->name('naturopathy');
+
 });
 
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/naturopathy', function () {
-    return view('naturopathy');
-})->name('naturopathy');
+// Route::middleware(['auth:sanctum', 'verified'])->get('/naturopathy', function () {
+//     return view('naturopathy');
+// })->name('naturopathy');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
